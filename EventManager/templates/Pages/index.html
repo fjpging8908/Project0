@@ -1,0 +1,65 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    {# Load the tag library #}
+    {% load bootstrap4 %}
+
+    {# Load CSS and JavaScript #}
+    {% bootstrap_css %}
+    {% bootstrap_javascript jquery='full' %}
+
+    {# Display django.contrib.messages as Bootstrap alerts #}
+    {% bootstrap_messages %}
+
+    <script>
+        function sendForm() {
+            $.ajax({
+                type: "POST",
+                url: "http://127.0.0.1:8000/login/",
+                data: JSON.stringify({username: $('#username').val(), password: $('#password').val()}),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (data) {
+                    if (data.message == "ok") {
+                        window.location = "http://127.0.0.1:8000/getEvent/";
+                    } else {
+                        alert(data.message);
+                    }
+                },
+
+                failure: function (errMsg) {
+                    alert("Se presentó un error al intentar el login");
+                }
+            });
+            return false;
+        }
+    </script>
+</head>
+<body>
+
+<div class="col-md-6 col-xl-5 mb-4">
+
+            <!--Card-->
+            <div class="card">
+
+                <!-- Form -->
+
+
+                {% block content %}
+                  <form method="post">
+                    {% csrf_token %}
+                    {{ form }}
+                    <button type="submit" class="btn btn-success">Save person</button>
+                  </form>
+                {% endblock %}
+                                <!-- Form -->
+
+            </div>
+            <!--/.Card-->
+
+          </div>
+</body>
+</html>

@@ -1,0 +1,37 @@
+{% extends 'Pages/base.html' %}
+
+{% block content %}
+  <p>
+    <a href="{% url 'event_add' %}" class="btn btn-primary">Agregar Evento</a>
+  </p>
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+          <th>Nombre</th>
+          <th>Categoria</th>
+          <th>Lugar</th>
+          <th>Dirección</th>
+          <th>Fecha Inicio</th>
+          <th>Fecha Fin</th>
+          <th>Tipo Evento</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for event in Events %}
+        <tr>
+            <td><a href="{% url 'event_edit' event.pk %}">{{ event.name }}</a></td>
+            <td>{{ event.category.name}}</td>
+            <td>{{ event.place}}</td>
+            <td>{{ event.address}}</td>
+            <td>{{ event.startDate}}</td>
+            <td>{{ event.finishDate}}</td>
+            <td>{{ event.get_eventType_display}}</td>
+        </tr>
+      {% empty %}
+        <tr class="table-active">
+          <td colspan="3">No data</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}
