@@ -50,7 +50,7 @@ class Event_View (ListView):
     def get_queryset(self):
         new_context = Event.objects.filter(
             user=self.request.user
-        )
+        ).order_by('-startDate')
         return new_context
 
 
@@ -75,6 +75,12 @@ class Event_Update(UpdateView):
         template_name = 'Pages/event_form.html'
         success_url = reverse_lazy('Event_View')
 
+@csrf_exempt
+def Event_Delete(request,id):
+    ev= Event.objects.get(id=id)
+    if ev is not None:
+        ev.delete()
+        return redirect('home')
 
 # Create your views here.
 @csrf_exempt
@@ -82,6 +88,8 @@ def getEvent(request):
     Event_List = Event.objects.all()
     context={'Event_List': Event_List}
     return render(request,'Pages/index.html',context)
+
+
 
 @csrf_exempt
 def Index(request):

@@ -13,6 +13,7 @@ urlpatterns = [
     path('event_view',views.Event_View.as_view(),name='Event_View'),
     path('event_add',views.Event_Create.as_view(),name='event_add'),
     path('<int:pk>/event_edit/',views.Event_Update.as_view(),name='event_edit'),
+    path('<int:id>/event_delete/',views.Event_Delete,name='event_delete'),
 
 
     url(r'^getEvent',views.getEvent,name='getEvent'),
