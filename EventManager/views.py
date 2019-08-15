@@ -50,7 +50,7 @@ class Event_View (ListView):
     def get_queryset(self):
         new_context = Event.objects.filter(
             user=self.request.user
-        ).order_by('-startDate')
+        ).order_by('-id')
         return new_context
 
 
